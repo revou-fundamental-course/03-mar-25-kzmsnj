@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             // If no stored name, prompt for it
             setTimeout(function() {
-                const name = prompt('Please enter your name:', 'Harfi');
+                const name = prompt('Please enter your name:', '');
                 if (name && name.trim() !== '') {
                     usernameElement.textContent = name;
                     sessionStorage.setItem('visitorName', name);
@@ -133,4 +133,208 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Slider Functionality
+    const slider = document.querySelector('.slider');
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const dotsContainer = document.querySelector('.slider-dots');
+    let currentSlide = 1; // Mulai dari 1 karena kita akan klon slide
+    let isDragging = false;
+    let startPos = 0;
+    let currentTranslate = 0;
+    let prevTranslate = 0;
+    let animationID = 0;
+    let autoSlideInterval;
+
+    // Infinite Loop: Clone first and last slides
+    const firstSlideClone = slides[0].cloneNode(true);
+    const lastSlideClone = slides[slides.length - 1].cloneNode(true);
+    slider.appendChild(firstSlideClone);
+    slider.insertBefore(lastSlideClone, slides[0]);
+
+    const allSlides = document.querySelectorAll('.slide'); // Update slides after cloning
+    slider.style.transform = `translateX(${-currentSlide * 100}%)`; // Set posisi awal
+
+    // Create Dots
+    function createDots() {
+        dotsContainer.innerHTML = ''; // Clear existing dots
+        for (let i = 0; i < slides.length; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                stopAutoSlide();
+                currentSlide = i + 1; // Sesuaikan dengan indeks slide (1-based karena klon)
+                setSliderPosition(true);
+                updateDots();
+                startAutoSlide();
+            });
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    // Fungsi untuk mengatur posisi slide
+    function setSliderPosition(withTransition = true) {
+        if (withTransition) {
+            slider.style.transition = 'transform 0.5s ease-in-out';
+        } else {
+            slider.style.transition = 'none';
+        }
+        slider.style.transform = `translateX(${-currentSlide * 100}%)`;
+        prevTranslate = -currentSlide * slider.clientWidth; // Update prevTranslate berdasarkan lebar slider
+    }
+
+    // Fungsi untuk memperbarui indikator dots
+    function updateDots() {
+        const actualIndex = (currentSlide - 1 + slides.length) % slides.length;
+        const dots = document.querySelectorAll('.dot');
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === actualIndex);
+        });
+    }
+
+    // Fungsi untuk pergi ke slide berikutnya
+    function nextSlide() {
+        currentSlide++;
+        setSliderPosition();
+        if (currentSlide === allSlides.length - 1) {
+            setTimeout(() => {
+                currentSlide = 1;
+                setSliderPosition(false);
+            }, 500);
+        }
+        updateDots();
+    }
+
+    // Fungsi untuk pergi ke slide sebelumnya
+    function prevSlide() {
+        currentSlide--;
+        setSliderPosition();
+        if (currentSlide === 0) {
+            setTimeout(() => {
+                currentSlide = slides.length;
+                setSliderPosition(false);
+            }, 500);
+        }
+        updateDots();
+    }
+
+    // Fungsi untuk memulai slide otomatis
+    function startAutoSlide() {
+        clearInterval(autoSlideInterval); // Clear interval sebelum membuat baru
+        autoSlideInterval = setInterval(nextSlide, 5000);
+    }
+
+    // Fungsi untuk menghentikan slide otomatis
+    function stopAutoSlide() {
+        clearInterval(autoSlideInterval);
+    }
+
+    // Tombol navigasi
+    if (nextBtn && prevBtn) {
+        nextBtn.addEventListener('click', () => {
+            stopAutoSlide();
+            nextSlide();
+            startAutoSlide();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            stopAutoSlide();
+            prevSlide();
+            startAutoSlide();
+        });
+    }
+
+    // Swipe/Drag Functionality
+    function startDragging(e) {
+        isDragging = true;
+        startPos = getPositionX(e);
+        currentTranslate = prevTranslate;
+        stopAutoSlide();
+        animationID = requestAnimationFrame(animation);
+        slider.style.transition = 'none';
+        e.preventDefault(); // Mencegah scrolling default
+    }
+
+    function drag(e) {
+        if (isDragging) {
+            const currentPosition = getPositionX(e);
+            const moveDistance = currentPosition - startPos;
+            currentTranslate = prevTranslate + moveDistance;
+            slider.style.transform = `translateX(${currentTranslate}px)`;
+            e.preventDefault(); // Mencegah scrolling default
+        }
+    }
+
+    function stopDragging() {
+        if (isDragging) {
+            isDragging = false;
+            cancelAnimationFrame(animationID);
+            const movedBy = currentTranslate - prevTranslate;
+            const slideWidth = slider.clientWidth;
+
+            if (movedBy < -slideWidth / 3 && currentSlide < allSlides.length - 1) {
+                currentSlide++;
+            } else if (movedBy > slideWidth / 3 && currentSlide > 0) {
+                currentSlide--;
+            }
+
+            if (currentSlide === allSlides.length - 1) {
+                setTimeout(() => {
+                    currentSlide = 1;
+                    setSliderPosition(false);
+                }, 500);
+            } else if (currentSlide === 0) {
+                setTimeout(() => {
+                    currentSlide = slides.length;
+                    setSliderPosition(false);
+                }, 500);
+            }
+
+            setSliderPosition(true);
+            updateDots();
+            startAutoSlide();
+        }
+    }
+
+    function getPositionX(e) {
+        return e.type.includes('touch') ? e.touches[0].clientX : e.pageX;
+    }
+
+    function animation() {
+        if (isDragging) {
+            slider.style.transform = `translateX(${currentTranslate}px)`;
+            requestAnimationFrame(animation);
+        }
+    }
+
+    // Event listener untuk touch dan mouse
+    slider.addEventListener('mousedown', startDragging);
+    slider.addEventListener('touchstart', startDragging, { passive: false });
+    slider.addEventListener('mouseup', stopDragging);
+    slider.addEventListener('touchend', stopDragging);
+    slider.addEventListener('mousemove', drag);
+    slider.addEventListener('touchmove', drag, { passive: false });
+    slider.addEventListener('mouseleave', stopDragging);
+    slider.addEventListener('touchcancel', stopDragging);
+
+    // Inisialisasi slider
+    createDots();
+    setSliderPosition();
+    startAutoSlide();
+
+    // Listener untuk transisi slider
+    slider.addEventListener('transitionend', () => {
+        if (currentSlide === 0) {
+            currentSlide = slides.length;
+            setSliderPosition(false);
+            updateDots();
+        } else if (currentSlide === allSlides.length - 1) {
+            currentSlide = 1;
+            setSliderPosition(false);
+            updateDots();
+        }
+    });
 });

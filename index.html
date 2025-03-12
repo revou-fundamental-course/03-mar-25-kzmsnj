@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>School Profile</title>
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <div class="container header-container">
             <div class="logo">
-                <img src="https://via.placeholder.com/40/ffd700/000000?text=√p" alt="School Logo">
+                <img src="assets/logo1.jpg" alt="School Logo">
             </div>
             <nav class="nav">
                 <a href="index.html">Home</a>
@@ -29,78 +29,104 @@
     
     <div class="container">
         <section class="welcome">
-            <h1>Hi <span id="username">Harfi</span>, Welcome To Website</h1>
-            <p>Ini adalah website latihan pertama</p>
-            <div class="counter">12345678</div>
+            <div class="inner-container">
+                <h1>Hi <span id="username">(Ur Name)</span>, Welcome to My 1st Project At revou</h1>
+                <p>This is my profile school project for my 1st revou assignment</p>
+                <!-- Slider Gambar -->
+                <div class="slider-container">
+                    <div class="slider" id="slider">
+                        <div class="slide">
+                            <img src="assets/1.jpeg" alt="Slide 1">
+                        </div>
+                        <div class="slide">
+                            <img src="assets/2.jpeg" alt="Slide 2">
+                        </div>
+                        <div class="slide">
+                            <img src="assets/3.jpeg" alt="Slide 3">
+                        </div>
+                        <div class="slide">
+                            <img src="assets/4.jpeg" alt="Slide 4">
+                        </div>
+                    </div>
+                    <button class="prev-btn">❮</button>
+                    <button class="next-btn">❯</button>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="counter">Intellectual Leadership School</div>
+            </div>
         </section>
         
         <section class="facilities">
-            <h2>Our Facilitation</h2>
-            <div class="facility-icons">
-                <div class="facility">
-                    <div class="icon"></div>
-                    <p>Professional <br>Teacher</p>
-                </div>
-                <div class="facility">
-                    <div class="icon"></div>
-                    <p>Sport Field</p>
-                </div>
-                <div class="facility">
-                    <div class="icon"></div>
-                    <p>Classroom</p>
+            <div class="inner-container">
+                <h2>Our Facilitation</h2>
+                <div class="facility-icons">
+                    <div class="facility">
+                        <div class="icon"></div>
+                        <p>Professional <br>Teacher</p>
+                    </div>
+                    <div class="facility">
+                        <div class="icon"></div>
+                        <p>Sport Field</p>
+                    </div>
+                    <div class="facility">
+                        <div class="icon"></div>
+                        <p>Classroom</p>
+                    </div>
                 </div>
             </div>
         </section>
         
         <section class="contact" id="message-us">
-            <h2>Message Us</h2>
-            <div class="form-container">
-                <div class="form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Nama:</label>
-                            <input type="text" id="name" name="name">
-                            <div id="nameError" class="error">Name is required</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="date">Tanggal Lahir:</label>
-                            <input type="date" id="date" name="date">
-                            <div id="dateError" class="error">Date is required</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Jenis Kelamin:</label>
-                            <div class="radio-group">
-                                <div>
-                                    <input type="radio" id="male" name="gender" value="Laki-Laki">
-                                    <label for="male" class="radio-label">Laki-Laki</label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="female" name="gender" value="Perempuan">
-                                    <label for="female" class="radio-label">Perempuan</label>
-                                </div>
+            <div class="inner-container">
+                <h2>Message Us</h2>
+                <div class="form-container">
+                    <div class="form">
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="name">Nama:</label>
+                                <input type="text" id="name" name="name">
+                                <div id="nameError" class="error">Name is required</div>
                             </div>
-                            <div id="genderError" class="error">Gender is required</div>
+                            
+                            <div class="form-group">
+                                <label for="date">Tanggal Lahir:</label>
+                                <input type="date" id="date" name="date">
+                                <div id="dateError" class="error">Date is required</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Jenis Kelamin:</label>
+                                <div class="radio-group">
+                                    <div>
+                                        <input type="radio" id="male" name="gender" value="Laki-Laki">
+                                        <label for="male" class="radio-label">Laki-Laki</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" id="female" name="gender" value="Perempuan">
+                                        <label for="female" class="radio-label">Perempuan</label>
+                                    </div>
+                                </div>
+                                <div id="genderError" class="error">Gender is required</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">Pesan:</label>
+                                <textarea id="message" name="message"></textarea>
+                                <div id="messageError" class="error">Message is required</div>
+                            </div>
+                            
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                    
+                    <div class="info" id="submitted-info">
+                        <div class="current-info">
+                            <p><strong>Current time: </strong><span id="current-time">-</span></p>
+                            <p><strong>Name: </strong><span id="info-name">-</span></p>
+                            <p><strong>Tanggal Lahir: </strong><span id="info-date">-</span></p>
+                            <p><strong>Jenis Kelamin: </strong><span id="info-gender">-</span></p>
+                            <p><strong>Pesan: </strong><span id="info-message">-</span></p>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="message">Pesan:</label>
-                            <textarea id="message" name="message"></textarea>
-                            <div id="messageError" class="error">Message is required</div>
-                        </div>
-                        
-                        <button type="submit">Submit</button>
-                    </form>
-                </div>
-                
-                <div class="info" id="submitted-info">
-                    <div class="current-info">
-                        <p><strong>Current time: </strong><span id="current-time">Fri Jun 17 2022 11:27:28 GMT+0100</span></p>
-                        <p><strong>Name: </strong><span id="info-name">Harfi Nazirwan</span></p>
-                        <p><strong>Tanggal Lahir: </strong><span id="info-date">05/04/2003</span></p>
-                        <p><strong>Jenis Kelamin: </strong><span id="info-gender">Laki - Laki</span></p>
-                        <p><strong>Pesan: </strong><span id="info-message">Ingin Belajar Dual Website</span></p>
                     </div>
                 </div>
             </div>
@@ -109,7 +135,9 @@
     
     <footer>
         <div class="container">
-            Created By rasheshhhhh
+            <div class="inner-container">
+                Created By rasheshhhhh
+            </div>
         </div>
     </footer>
 
