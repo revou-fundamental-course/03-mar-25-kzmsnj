@@ -1,0 +1,610 @@
+/* Main Styles for the School Profile Website */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden; /* Mencegah scroll horizontal */
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    color: #D3D3D3;
+    background-color: #1A1A1A;
+    background-image: url('https://via.placeholder.com/1600x900?text=City+Silhouette');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Container untuk konten di dalam section */
+.container {
+    width: 100%;
+    padding: 0; /* Hapus padding untuk full-edge */
+}
+
+/* Header Styles */
+header {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px 0;
+    border-bottom: 2px solid #FFC107;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    margin: 0;
+    left: 0;
+    right: 0; /* Pastikan menempel ke tepi */
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0; /* Hapus padding untuk full-edge */
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    margin: 0 20px; /* Jarak kecil dari tepi */
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: brightness(1.2) contrast(1.1);
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
+
+.nav {
+    display: flex;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #D3D3D3;
+    padding: 12px 25px;
+    margin: 0 10px;
+    border-radius: 50px;
+    background: rgba(255, 193, 7, 0.2);
+    display: inline-block;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav a:hover, .nav a.active {
+    background: #FFC107;
+    color: #1A1A1A;
+    transform: translateY(-3px);
+}
+
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+    padding: 12px;
+    margin-right: 20px; /* Jarak dari tepi kanan */
+}
+
+.menu-toggle span {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: #FFC107;
+    margin: 6px 0;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+/* Home Page Styles */
+.welcome {
+    padding: 80px 0;
+    min-height: 300px;
+    text-align: left;
+    border-bottom: 2px solid #FFC107;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    left: 0;
+    right: 0; /* Pastikan menempel ke tepi */
+}
+
+.welcome .container {
+    padding: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.welcome::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.welcome h1 {
+    color: #FFC107;
+    margin-bottom: 25px;
+    font-size: 48px;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 2;
+    padding: 0 20px; /* Jarak kecil untuk teks */
+}
+
+.welcome p {
+    color: #D3D3D3;
+    margin-top: 0;
+    font-size: 20px;
+    max-width: 700px;
+    position: relative;
+    z-index: 2;
+    padding: 0 20px;
+}
+
+.counter {
+    text-align: center;
+    margin-top: 140px;
+    color: #A9A9A9;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 0 20px;
+}
+
+/* Facilities Section */
+.facilities {
+    padding: 80px 0;
+    border-bottom: 2px solid #FFC107;
+    width: 100%;
+    position: relative;
+    margin: 0;
+    left: 0;
+    right: 0; /* Pastikan menempel ke tepi */
+}
+
+.facilities .container {
+    padding: 0;
+}
+
+.facilities h2 {
+    margin-bottom: 50px;
+    text-align: left;
+    color: #FFC107;
+    font-size: 36px;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    padding: 0 20px; /* Jarak kecil untuk teks */
+}
+
+.facility-icons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin: 40px 0;
+    text-align: center;
+    padding: 0 20px; /* Jarak kecil untuk ikon */
+}
+
+.facility {
+    margin: 0;
+    transition: transform 0.3s ease;
+}
+
+.facility:hover {
+    transform: translateY(-15px);
+}
+
+.icon {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 3px solid #FFC107;
+    margin: 0 auto 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 193, 7, 0.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.facility p {
+    color: #D3D3D3;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 0 5px;
+}
+
+/* Contact Section */
+.contact {
+    padding: 80px 0;
+    border-bottom: 2px solid #FFC107;
+    width: 100%;
+    position: relative;
+    margin: 0;
+    left: 0;
+    right: 0; /* Pastikan menempel ke tepi */
+}
+
+.contact .container {
+    padding: 0;
+}
+
+.contact h2 {
+    margin-bottom: 50px;
+    text-align: left;
+    color: #FFC107;
+    font-size: 36px;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    padding: 0 20px;
+}
+
+.form-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 0 20px;
+}
+
+.form, .info {
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.info {
+    background: rgba(169, 169, 169, 0.1);
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: #D3D3D3;
+    font-weight: 600;
+}
+
+.radio-label {
+    display: inline;
+    color: #D3D3D3;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #FFC107;
+    border-radius: 8px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #D3D3D3;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #fff;
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+    outline: none;
+}
+
+input[type="radio"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+.radio-group {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 15px;
+}
+
+textarea {
+    height: 180px;
+}
+
+button {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(45deg, #FFC107, #FF9800);
+    border: none;
+    color: #1A1A1A;
+    cursor: pointer;
+    margin-top: 25px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+}
+
+.current-info p {
+    margin: 10px 0;
+    line-height: 1.8;
+    color: #A9A9A9;
+}
+
+.error {
+    color: #FF5555;
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+}
+
+/* Footer Styles */
+footer {
+    padding: 40px 0;
+    text-align: right;
+    color: #A9A9A9;
+    font-size: 16px;
+    background: rgba(0, 0, 0, 0.9);
+    width: 100%;
+    border-top: 2px solid #FFC107;
+    margin: 0;
+    left: 0;
+    right: 0; /* Pastikan menempel ke tepi */
+}
+
+footer .container {
+    padding: 0;
+}
+
+footer p {
+    margin: 0;
+    padding: 0 20px;
+}
+
+/* Profile Page Styles */
+.profile-banner {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://via.placeholder.com/1600x400?text=City+Skyline');
+    color: #fff;
+    padding: 120px 0;
+    text-align: center;
+    border-bottom: 2px solid #FFC107;
+    width: 100%;
+    position: relative;
+    margin: 0;
+    left: 0;
+    right: 0; /* Pastikan menempel ke tepi */
+}
+
+.profile-banner h1 {
+    font-size: 56px;
+    margin-bottom: 20px;
+    font-weight: 800;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    padding: 0 20px;
+}
+
+.profile-banner p {
+    font-size: 22px;
+    opacity: 0.9;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.about-school, .vision-mission, .school-stats {
+    padding: 100px 0;
+    border-bottom: 2px solid #FFC107;
+    width: 100%;
+    position: relative;
+    margin: 0;
+    left: 0;
+    right: 0; /* Pastikan menempel ke tepi */
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    padding: 0 20px;
+}
+
+.about-image {
+    flex: 1;
+    min-width: 300px;
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.about-image:hover img {
+    transform: scale(1.05);
+}
+
+.about-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.about-text p {
+    margin-bottom: 25px;
+    text-align: justify;
+    color: #A9A9A9;
+}
+
+.vm-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    padding: 0 20px;
+}
+
+.vision, .mission {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.vision:hover, .mission:hover {
+    transform: translateY(-15px);
+}
+
+.vision h3, .mission h3 {
+    color: #FFC107;
+    margin-bottom: 25px;
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.mission ul {
+    padding-left: 25px;
+}
+
+.mission li {
+    margin-bottom: 20px;
+    color: #A9A9A9;
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-top: 50px;
+    padding: 0 20px;
+}
+
+.stat-box {
+    background: linear-gradient(45deg, #FFC107, #FF9800);
+    color: #1A1A1A;
+    padding: 30px;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.stat-box:hover {
+    transform: translateY(-10px);
+}
+
+.stat-number {
+    font-size: 40px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.stat-title {
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0;
+    }
+    
+    .nav {
+        display: none;
+        width: 100%;
+        margin-top: 20px;
+    }
+    
+    .nav.active {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .nav a {
+        margin: 10px 0;
+        width: 100%;
+        text-align: center;
+        border-radius: 10px;
+    }
+    
+    .menu-toggle {
+        display: block;
+        position: absolute;
+        top: 25px;
+        right: 20px;
+    }
+    
+    .form-container {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+    
+    .about-content, .vm-container {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+    
+    .stats-container {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+    
+    .facility-icons {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        padding: 0 20px;
+    }
+    
+    .profile-banner {
+        padding: 80px 0;
+    }
+    
+    .profile-banner h1 {
+        font-size: 36px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .facility-icons {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+    
+    .facility {
+        margin-bottom: 50px;
+    }
+    
+    .welcome h1 {
+        font-size: 32px;
+    }
+}
+
+/* Tambahkan font Montserrat via CDN di HTML */
