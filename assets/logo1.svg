@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <!-- Background with gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0052CC" />
+      <stop offset="100%" stop-color="#00A3E0" />
+    </linearGradient>
+    
+    <linearGradient id="flameGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF9500" />
+      <stop offset="100%" stop-color="#FF3800" />
+    </linearGradient>
+    
+    <clipPath id="hexClip">
+      <path d="M250,80 L370,150 L370,350 L250,420 L130,350 L130,150 Z" />
+    </clipPath>
+  </defs>
+  
+  <!-- Main hexagon shape -->
+  <path d="M250,80 L370,150 L370,350 L250,420 L130,350 L130,150 Z" fill="url(#bgGradient)" />
+  
+  <!-- Abstracted book and torch symbol -->
+  <g clip-path="url(#hexClip)">
+    <!-- Abstract book pages -->
+    <path d="M130,250 L250,180 L370,250 L370,350 L250,420 L130,350 Z" fill="#ffffff" fill-opacity="0.15" />
+    <path d="M250,180 L250,420" stroke="#ffffff" stroke-width="4" stroke-opacity="0.6" />
+    
+    <!-- Modern torch/flame symbol -->
+    <path d="M250,120 
+             C270,140 290,150 300,180
+             C310,220 290,240 250,260
+             C210,240 190,220 200,180
+             C210,150 230,140 250,120 Z" 
+          fill="url(#flameGradient)" />
+    
+    <!-- Light beams from flame -->
+    <path d="M250,180 L210,140" stroke="#ffffff" stroke-width="2" stroke-opacity="0.7" />
+    <path d="M250,180 L290,140" stroke="#ffffff" stroke-width="2" stroke-opacity="0.7" />
+    <path d="M250,180 L250,140" stroke="#ffffff" stroke-width="2" stroke-opacity="0.7" />
+    <path d="M250,180 L230,150" stroke="#ffffff" stroke-width="2" stroke-opacity="0.7" />
+    <path d="M250,180 L270,150" stroke="#ffffff" stroke-width="2" stroke-opacity="0.7" />
+  </g>
+  
+  <!-- Modern leaf/growth symbol -->
+  <path d="M200,340 
+           C180,320 170,300 180,280
+           C190,290 205,295 220,300"
+        fill="none" stroke="#4ADE80" stroke-width="3" stroke-linecap="round" />
+  
+  <path d="M300,340 
+           C320,320 330,300 320,280
+           C310,290 295,295 280,300"
+        fill="none" stroke="#4ADE80" stroke-width="3" stroke-linecap="round" />
+  
+  <!-- School name - modern style -->
+  <g transform="translate(250, 450)">
+    <text text-anchor="middle" font-family="'Arial', sans-serif" font-weight="700" font-size="24" fill="#ffffff">
+      SEKOLAH UNGGUL
+    </text>
+    <text text-anchor="middle" font-family="'Arial', sans-serif" font-weight="700" font-size="24" y="28" fill="#ffffff">
+      INDONESIA
+    </text>
+  </g>
+  
+  <!-- Establishment year and tagline -->
+  <text x="250" y="70" text-anchor="middle" font-family="'Arial', sans-serif" font-size="16" font-weight="600" fill="#ffffff">EST. 2005</text>
+  
+  <!-- Minimalist dots representing students or growth stages -->
+  <circle cx="210" cy="360" r="4" fill="#ffffff" />
+  <circle cx="230" cy="360" r="4" fill="#ffffff" />
+  <circle cx="250" cy="360" r="6" fill="#ffffff" />
+  <circle cx="270" cy="360" r="4" fill="#ffffff" />
+  <circle cx="290" cy="360" r="4" fill="#ffffff" />
+</svg>

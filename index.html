@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Profile</title>
+    <title>School Profile - Sekolah Unggul Indonesia</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
@@ -11,13 +11,13 @@
     <header>
         <div class="container header-container">
             <div class="logo">
-                <img src="assets/logo1.jpg" alt="School Logo">
+                <img src="assets/logo1.svg" alt="School Logo">
             </div>
             <nav class="nav">
                 <a href="index.html">Home</a>
-                <a href="profile.html">Our Profile</a>
-                <a href="#">Achievement</a>
+                <a href="profile.html#achievement">Achievement</a> <!-- Diperbarui ke profile.html -->
                 <a href="#message-us">Message Us</a>
+                <a href="profile.html">Our Profile</a>
             </nav>
             <div class="menu-toggle">
                 <span></span>
@@ -30,52 +30,162 @@
     <div class="container">
         <section class="welcome">
             <div class="inner-container">
-                <h1>Hi <span id="username">(Ur Name)</span>, Welcome to My 1st Project At revou</h1>
-                <p>This is my profile school project for my 1st revou assignment</p>
-                <!-- Slider Gambar -->
+                <h1>Hi <span id="username">(Ur Name)</span>, Welcome to Sekolah Unggul Indonesia</h1>
+                <p>Discover a world-class education that shapes future leaders with creativity, critical thinking, and compassion since 2005.</p>
                 <div class="slider-container">
                     <div class="slider" id="slider">
                         <div class="slide">
-                            <img src="assets/1.jpeg" alt="Slide 1">
+                            <img src="assets/1.jpeg" alt="School Campus">
                         </div>
                         <div class="slide">
-                            <img src="assets/2.jpeg" alt="Slide 2">
+                            <img src="assets/2.jpeg" alt="Science Lab">
                         </div>
                         <div class="slide">
-                            <img src="assets/3.jpeg" alt="Slide 3">
+                            <img src="assets/3.jpeg" alt="Sports Day">
                         </div>
                         <div class="slide">
-                            <img src="assets/4.jpeg" alt="Slide 4">
+                            <img src="assets/4.jpeg" alt="Graduation Ceremony">
                         </div>
                     </div>
                     <button class="prev-btn">❮</button>
                     <button class="next-btn">❯</button>
                     <div class="slider-dots"></div>
                 </div>
-                <div class="counter">Intellectual Leadership School</div>
+                <div class="counter">Explore Our Vibrant Community</div>
+                <div class="quick-links">
+                    <a href="#why-choose-us" class="quick-link-btn">Why Us?</a>
+                    <a href="#events" class="quick-link-btn">Events</a>
+                    <a href="#resources" class="quick-link-btn">Resources</a>
+                </div>
             </div>
         </section>
-        
-        <section class="facilities">
+
+        <section class="why-choose-us" id="why-choose-us">
             <div class="inner-container">
-                <h2>Our Facilitation</h2>
-                <div class="facility-icons">
-                    <div class="facility">
-                        <div class="icon"></div>
-                        <p>Professional <br>Teacher</p>
+                <h2>Why Choose Sekolah Unggul Indonesia?</h2>
+                <div class="why-container">
+                    <div class="why-item">
+                        <div class="icon">
+                            <img src="assets/icon1.png" alt="Innovative Learning">
+                        </div>
+                        <h3>Innovative Learning</h3>
+                        <p>We blend modern teaching methods with technology to foster curiosity and innovation in every student.</p>
                     </div>
-                    <div class="facility">
-                        <div class="icon"></div>
-                        <p>Sport Field</p>
+                    <div class="why-item">
+                        <div class="icon">
+                            <img src="assets/icon2.jpeg" alt="Holistic Development">
+                        </div>
+                        <h3>Holistic Development</h3>
+                        <p>Our programs focus on academics, arts, sports, and character-building to create well-rounded individuals.</p>
                     </div>
-                    <div class="facility">
-                        <div class="icon"></div>
-                        <p>Classroom</p>
+                    <div class="why-item">
+                        <div class="icon">
+                            <img src="assets/icon3.png" alt="Global Perspective">
+                        </div>
+                        <h3>Global Perspective</h3>
+                        <p>We prepare students for the world with a curriculum that integrates international standards and cultural awareness.</p>
                     </div>
                 </div>
             </div>
         </section>
-        
+
+        <section class="events" id="events">
+            <div class="inner-container">
+                <h2>Upcoming Events</h2>
+                <div class="event-container">
+                    <div class="event-item">
+                        <h3>Science Fair 2025</h3>
+                        <p><strong>Date:</strong> April 15, 2025</p>
+                        <p><strong>Details:</strong> Students showcase innovative projects. Free entry for families!</p>
+                        <a href="#" class="event-link">Register Now</a>
+                    </div>
+                    <div class="event-item">
+                        <h3>Sports Day</h3>
+                        <p><strong>Date:</strong> May 10, 2025</p>
+                        <p><strong>Details:</strong> Track, field, and team sports. Join us to cheer!</p>
+                        <a href="#" class="event-link">Learn More</a>
+                    </div>
+                    <div class="event-item">
+                        <h3>Annual Talent Show</h3>
+                        <p><strong>Date:</strong> June 20, 2025</p>
+                        <p><strong>Details:</strong> Music, dance, and drama performances.</p>
+                        <a href="#" class="event-link">Get Tickets</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="student-life">
+            <div class="inner-container">
+                <h2>Student Life at Sekolah Unggul</h2>
+                <p>Our students thrive in a dynamic environment filled with opportunities for growth and connection.</p>
+                <div class="life-container">
+                    <div class="life-item">
+                        <img src="assets/life1.jpg" alt="Clubs and Activities">
+                        <h3>Clubs & Activities</h3>
+                        <p>Over 20 clubs including robotics, debate, and photography.</p>
+                        <a href="#" class="life-link">Explore Clubs</a>
+                    </div>
+                    <div class="life-item">
+                        <img src="assets/life2.jpeg" alt="Community Service">
+                        <h3>Community Service</h3>
+                        <p>Projects like tree planting and charity drives.</p>
+                        <a href="#" class="life-link">Join a Project</a>
+                    </div>
+                    <div class="life-item">
+                        <img src="assets/life3.jpg" alt="Cultural Celebrations">
+                        <h3>Cultural Celebrations</h3>
+                        <p>Events like Cultural Day with food and music.</p>
+                        <a href="#" class="life-link">See Schedule</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="quotes">
+            <div class="inner-container">
+                <h2>Words That Inspire Us</h2>
+                <div class="quote-container">
+                    <div class="quote-item">
+                        <p>"Education is the most powerful weapon which you can use to change the world."</p>
+                        <span>- Nelson Mandela</span>
+                    </div>
+                    <div class="quote-item">
+                        <p>"The future belongs to those who believe in the beauty of their dreams."</p>
+                        <span>- Eleanor Roosevelt</span>
+                    </div>
+                    <div class="quote-item">
+                        <p>"Creativity is intelligence having fun."</p>
+                        <span>- Albert Einstein</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="resources" id="resources">
+            <div class="inner-container">
+                <h2>Learning Resources</h2>
+                <p>Access tools and materials to support your journey with us.</p>
+                <div class="resource-container">
+                    <div class="resource-item">
+                        <h3>Student Portal</h3>
+                        <p>Check grades, assignments, and schedules.</p>
+                        <a href="#" class="resource-link">Login</a>
+                    </div>
+                    <div class="resource-item">
+                        <h3>Library Catalog</h3>
+                        <p>Browse our collection of books and e-resources.</p>
+                        <a href="#" class="resource-link">Explore</a>
+                    </div>
+                    <div class="resource-item">
+                        <h3>Parent Guide</h3>
+                        <p>Information for parents on policies and events.</p>
+                        <a href="#" class="resource-link">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="contact" id="message-us">
             <div class="inner-container">
                 <h2>Message Us</h2>
@@ -87,13 +197,11 @@
                                 <input type="text" id="name" name="name">
                                 <div id="nameError" class="error">Name is required</div>
                             </div>
-                            
                             <div class="form-group">
                                 <label for="date">Tanggal Lahir:</label>
                                 <input type="date" id="date" name="date">
                                 <div id="dateError" class="error">Date is required</div>
                             </div>
-                            
                             <div class="form-group">
                                 <label>Jenis Kelamin:</label>
                                 <div class="radio-group">
@@ -108,17 +216,14 @@
                                 </div>
                                 <div id="genderError" class="error">Gender is required</div>
                             </div>
-                            
                             <div class="form-group">
                                 <label for="message">Pesan:</label>
                                 <textarea id="message" name="message"></textarea>
                                 <div id="messageError" class="error">Message is required</div>
                             </div>
-                            
                             <button type="submit">Submit</button>
                         </form>
                     </div>
-                    
                     <div class="info" id="submitted-info">
                         <div class="current-info">
                             <p><strong>Current time: </strong><span id="current-time">-</span></p>
@@ -136,7 +241,7 @@
     <footer>
         <div class="container">
             <div class="inner-container">
-                Created By rasheshhhhh
+                Created By rasheshhhhh | © 2025 Sekolah Unggul Indonesia | <a href="#message-us">Contact Us</a>
             </div>
         </div>
     </footer>
