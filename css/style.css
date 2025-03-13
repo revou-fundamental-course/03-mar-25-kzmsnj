@@ -24,6 +24,100 @@ body {
     background-attachment: fixed;
     opacity: 1; /* Default state */
     transition: opacity 0.3s ease; /* Transisi untuk fade in/out */
+    overflow-x: hidden; /* Pastikan tidak ada scroll horizontal selama animasi */
+    position: relative;
+}
+
+.page-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 37, 47, 0.8);
+    z-index: 9999;
+    opacity: 0;
+    animation: fadeOverlay 0.6s ease forwards;
+}
+
+@keyframes fadeOverlay {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.page-exit {
+    position: absolute;
+    width: 100%;
+    animation-duration: 0.6s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* Smooth curve */
+    animation-fill-mode: forwards;
+}
+
+.page-exit.slide-to-left {
+    animation-name: slideOutLeft;
+}
+
+.page-exit.slide-to-right {
+    animation-name: slideOutRight;
+}
+
+/* Animasi masuk halaman */
+.page-enter {
+    animation-duration: 0.6s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    animation-fill-mode: forwards;
+}
+
+.page-enter.slide-in-from-left {
+    animation-name: slideInFromLeft;
+}
+
+.page-enter.slide-in-from-right {
+    animation-name: slideInFromRight;
+}
+
+@keyframes slideOutLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 section, .profile-banner {
@@ -37,6 +131,14 @@ section, .profile-banner {
 
 .slide-in-right {
     animation: slideInRight 0.8s ease-out forwards;
+}
+
+.slide-in-up {
+    animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.slide-in-down {
+    animation: slideInDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .section-animate, .profile-banner.section-animate {
@@ -73,6 +175,28 @@ section, .profile-banner {
     to {
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
     }
 }
 
@@ -1383,6 +1507,23 @@ footer .inner-container {
             transform: translateX(0);
         }
     }
+    .page-exit, .page-enter {
+        animation-duration: 0.5s;
+    }
+    .page-transition-overlay {
+        animation-duration: 0.5s;
+    }
+    .slide-in-up, .slide-in-down {
+        animation-duration: 0.6s;
+    }
+    @keyframes slideInUp {
+        from { transform: translateY(50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes slideInDown {
+        from { transform: translateY(-50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -1428,6 +1569,23 @@ footer .inner-container {
             opacity: 1;
             transform: translateX(0);
         }
+    }
+    .page-exit, .page-enter {
+        animation-duration: 0.4s;
+    }
+    .page-transition-overlay {
+        animation-duration: 0.4s;
+    }
+    .slide-in-up, .slide-in-down {
+        animation-duration: 0.5s;
+    }
+    @keyframes slideInUp {
+        from { transform: translateY(30px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes slideInDown {
+        from { transform: translateY(-30px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
     }
 }
 

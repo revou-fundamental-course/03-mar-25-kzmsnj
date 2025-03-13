@@ -156,16 +156,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Smooth scrolling untuk navigasi dalam halaman yang sama (kedua halaman)
-    const navLinks = document.querySelectorAll('.nav a');
-    let lastScrollPosition = window.scrollY; // Simpan posisi scroll terakhir
-
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const href = this.getAttribute('href');
             const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 
-            // Jika tautan dalam halaman yang sama
+            // Jika tautan dalam halaman yang sama (slide atas-bawah)
             if (href.startsWith('#')) {
                 const targetSection = document.querySelector(href);
                 if (targetSection) {
@@ -184,8 +181,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     const profileBanner = document.querySelector('#profile-banner');
                     if (profileBanner) animateSection(profileBanner, 'up');
                 }
-            }
-            // Jika tautan ke halaman lain
+            } 
+            // Jika tautan ke halaman lain (slide kanan-kiri)
             else {
                 const [targetPage, targetSection] = href.split('#');
                 if (targetPage && targetPage !== currentPage) {
@@ -194,9 +191,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     transitionOverlay.classList.add('page-transition-overlay');
                     document.body.appendChild(transitionOverlay);
 
-                    // Tentukan arah animasi berdasarkan tautan
+                    // Tentukan arah animasi horizontal
                     const isToProfile = targetPage === 'profile.html';
-                    const directionClass = isToProfile ? 'slide-to-right' : 'slide-to-left';
+                    const directionClass = isToProfile ? 'slide-to-left' : 'slide-to-right';
 
                     // Terapkan animasi keluar
                     document.body.classList.add('page-exit', directionClass);
@@ -208,9 +205,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // Bersihkan overlay setelah transisi
                     setTimeout(() => {
-                        document.body.removeChild(transitionOverlay);
+                        if (document.body.contains(transitionOverlay)) {
+                            document.body.removeChild(transitionOverlay);
+                        }
                         document.body.classList.remove('page-exit', directionClass);
-                    }, 1200); // Durasi total untuk memastikan pembersihan
+                    }, 1200);
                 } else if (targetSection) {
                     const section = document.querySelector(`#${targetSection}`);
                     if (section) {
@@ -241,36 +240,45 @@ document.addEventListener('DOMContentLoaded', function() {
             top: 0,
             behavior: 'smooth'
         });
-    }+
+    }
 
     function animateSection(section, direction) {
-        // Hapus kelas animasi sebelumnya
         document.querySelectorAll('section, .profile-banner').forEach(sec => {
-            sec.classList.remove('slide-in-left', 'slide-in-right');
+            sec.classList.remove('slide-in-up', 'slide-in-down');
         });
-
-        // Tentukan animasi berdasarkan arah
-        const animationClass = direction === 'up' ? 'slide-in-right' : 'slide-in-left';
+        const animationClass = direction === 'up' ? 'slide-in-up' : 'slide-in-down';
         section.classList.add(animationClass);
-
-        // Hapus kelas setelah animasi selesai
         setTimeout(() => {
             section.classList.remove(animationClass);
         }, 800); // Sesuaikan dengan durasi animasi di CSS
     }
 
-    // Fade-in saat halaman dimuat
+    // Fade-in dan animasi masuk saat halaman dimuat
     window.addEventListener('load', () => {
-        document.body.style.transition = 'opacity 0.3s ease';
-        document.body.style.opacity = '1';
-        
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const referrer = document.referrer;
+        const fromProfile = referrer.includes('profile.html');
+        const fromIndex = referrer.includes('index.html');
+
+        let enterClass = 'slide-in-from-right'; // Default masuk dari kanan
+        if (currentPage === 'index.html' && fromProfile) {
+            enterClass = 'slide-in-from-left'; // Dari profile ke index
+        } else if (currentPage === 'profile.html' && fromIndex) {
+            enterClass = 'slide-in-from-right'; // Dari index ke profile
+        }
+
+        document.body.classList.add('page-enter', enterClass);
+        setTimeout(() => {
+            document.body.classList.remove('page-enter', enterClass);
+        }, 600);
+
         const hash = window.location.hash;
         if (hash) {
             const targetSection = document.querySelector(hash);
             if (targetSection) {
                 setTimeout(() => {
                     scrollToSection(targetSection);
-                    animateSection(targetSection, 'down'); // Default ke bawah saat load
+                    animateSection(targetSection, 'down');
                 }, 100);
             }
         }
