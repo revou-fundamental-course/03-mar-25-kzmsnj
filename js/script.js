@@ -357,6 +357,119 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    const welcomeHeading = document.querySelector('.welcome h1');
+    const welcomeParagraph = document.querySelector('.welcome p');
+    
+    if (welcomeHeading && welcomeParagraph) {
+        // Character-by-character animation for the heading
+        animateText(welcomeHeading);
+        
+        // Add interaction for username
+        const usernameElement = document.getElementById('username');
+        if (usernameElement) {
+            usernameElement.addEventListener('mouseover', function() {
+                this.style.transform = 'scale(1.1)';
+                this.style.textShadow = '0 0 15px rgba(0, 196, 204, 0.8)';
+            });
+            
+            usernameElement.addEventListener('mouseout', function() {
+                this.style.transform = 'scale(1)';
+                this.style.textShadow = '';
+            });
+        }
+        
+        // Add scroll-triggered animations
+        document.addEventListener('scroll', function() {
+            const welcomeSection = document.querySelector('.welcome');
+            if (!welcomeSection) return;
+            
+            const sectionPosition = welcomeSection.getBoundingClientRect();
+            const screenPosition = window.innerHeight;
+            
+            if (sectionPosition.top < screenPosition && sectionPosition.bottom > 0) {
+                // Apply additional animations when welcome section is in view
+                welcomeHeading.classList.add('in-view');
+                welcomeParagraph.classList.add('in-view');
+            }
+        });
+    }
+    
+    // Character-by-character animation function
+    function animateText(element) {
+        if (!element) return;
+        
+        // Skip if already animated
+        if (element.classList.contains('text-animated')) return;
+        
+        const text = element.textContent;
+        let htmlContent = '';
+        
+        // Handle username span specially
+        if (element.innerHTML.includes('span id="username"')) {
+            // Preserve the span for username
+            const parts = element.innerHTML.split(/<span id="username">(.*?)<\/span>/);
+            
+            // Animate the text before and after the span
+            htmlContent = animateTextPart(parts[0]) + 
+                          '<span id="username">' + (parts[1] || '(Ur Name)') + '</span>' + 
+                          (parts[2] ? animateTextPart(parts[2]) : '');
+        } else {
+            htmlContent = animateTextPart(text);
+        }
+        
+        element.innerHTML = htmlContent;
+        element.classList.add('text-animated');
+        
+        // Animate each character
+        const chars = element.querySelectorAll('.char-animate');
+        chars.forEach((char, index) => {
+            setTimeout(() => {
+                char.classList.add('char-visible');
+            }, 50 * index);
+        });
+    }
+    
+    function animateTextPart(text) {
+        let result = '';
+        for (let i = 0; i < text.length; i++) {
+            if (text[i] === ' ') {
+                result += ' ';
+            } else {
+                result += `<span class="char-animate">${text[i]}</span>`;
+            }
+        }
+        return result;
+    }
+    
+    // Add interactive animations
+    document.addEventListener('mousemove', function(e) {
+        const welcomeSection = document.querySelector('.welcome');
+        if (!welcomeSection) return;
+        
+        const bounds = welcomeSection.getBoundingClientRect();
+        if (e.clientX >= bounds.left && e.clientX <= bounds.right && 
+            e.clientY >= bounds.top && e.clientY <= bounds.bottom) {
+            
+            // Calculate mouse position relative to section center
+            const centerX = bounds.width / 2;
+            const centerY = bounds.height / 2;
+            const posX = e.clientX - bounds.left - centerX;
+            const posY = e.clientY - bounds.top - centerY;
+            
+            // Apply subtle parallax effect
+            const welcomeHeading = document.querySelector('.welcome h1');
+            const welcomeParagraph = document.querySelector('.welcome p');
+            
+            if (welcomeHeading) {
+                welcomeHeading.style.transform = `translateX(${posX / 50}px) translateY(${posY / 50}px)`;
+            }
+            
+            if (welcomeParagraph) {
+                welcomeParagraph.style.transform = `translateX(${posX / 80}px) translateY(${posY / 80}px)`;
+            }
+        }
+    });
+
     // Debugging
     console.log('Script loaded on:', window.location.pathname);
 });

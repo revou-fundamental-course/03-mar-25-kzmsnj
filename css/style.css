@@ -155,6 +155,8 @@ header {
     font-size: 48px;
     font-weight: 700;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    animation: fadeInUp 1.2s ease-out forwards;
     position: relative;
     z-index: 3;
 }
@@ -164,9 +166,23 @@ header {
     margin: 0 auto 30px;
     font-size: 20px;
     max-width: 700px;
+    opacity: 0;
+    animation: fadeInUp 1.2s ease-out 0.5s forwards;
     position: relative;
     z-index: 3;
+    
 }
+
+.welcome h1 span {
+    display: inline-block;
+    color: #00C4CC;
+    animation: glowPulse 3s infinite 1.5s;
+    transition: all 0.3s ease;
+  }
+  
+  .welcome h1 span:hover {
+    transform: scale(1.05);
+  }
 
 /* Slider Styles (Index Page) */
 .slider-container {
@@ -822,6 +838,28 @@ footer .inner-container {
     }
 }
 
+/* Interactive text effect classes */
+.char-animate {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+  }
+  
+  .char-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Additional hover effects for the welcome section */
+  .welcome .inner-container:hover h1 {
+    transform: translateY(-5px);
+  }
+  
+  .welcome h1, .welcome p {
+    transition: transform 0.5s ease;
+  }
+
 /* Why Choose Us Section */
 .why-choose-us {
     padding: 80px 0;
@@ -942,7 +980,7 @@ footer .inner-container {
 }
 
 .student-life h2 {
-    margin-bottom: 20px;
+    margin-bottom: 0px;
     text-align: left;
     color: #1A252F;
     font-size: 36px;
@@ -1255,6 +1293,14 @@ footer .inner-container {
     .profile-banner h1, .welcome h1 {
         font-size: 36px;
     }
+    .welcome h1 {
+        animation-duration: 1s;
+    }
+      
+    .welcome p {
+        animation-duration: 1s;
+        animation-delay: 0.3s;
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -1275,3 +1321,37 @@ footer .inner-container {
         font-size: 18px;
     }
 }
+
+@keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+}
+  
+  @keyframes glowPulse {
+    0% {
+      text-shadow: 0 0 5px rgba(0, 196, 204, 0.2);
+    }
+    50% {
+      text-shadow: 0 0 15px rgba(0, 196, 204, 0.6), 0 0 30px rgba(0, 196, 204, 0.4);
+    }
+    100% {
+      text-shadow: 0 0 5px rgba(0, 196, 204, 0.2);
+    }
+}
+  
+  @keyframes typeWriter {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+}
+
+  
