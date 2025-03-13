@@ -13,18 +13,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // Username welcome handling (hanya di index.html)
     const usernameElement = document.getElementById('username');
     const storedName = sessionStorage.getItem('visitorName');
-    
+
     if (usernameElement) {
+        // Jika sudah ada nama di sessionStorage, langsung tampilkan
         if (storedName) {
+            console.log('Nama dari sessionStorage:', storedName);
             usernameElement.textContent = storedName;
-        } else {
-            setTimeout(function() {
-                const name = prompt('Please enter your name:', '');
-                if (name && name.trim() !== '') {
-                    usernameElement.textContent = name;
-                    sessionStorage.setItem('visitorName', name);
-                }
-            }, 1000);
+        } 
+        // Jika belum ada, minta input dan tampilkan langsung
+        else {
+            const name = prompt('Please enter your name:', '');
+            console.log('Nama yang dimasukkan:', name);
+            if (name && name.trim() !== '') {
+                // Langsung ubah teks di elemen username
+                usernameElement.textContent = name;
+                // Simpan ke sessionStorage
+                sessionStorage.setItem('visitorName', name);
+            } else {
+                // Jika input kosong atau dibatalkan, gunakan default
+                usernameElement.textContent = '(Ur Name)';
+            }
         }
     }
     
@@ -156,25 +164,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Jika tautan dalam halaman yang sama
             if (href.startsWith('#')) {
+                e.preventDefault();
                 const targetSection = document.querySelector(href);
                 if (targetSection) {
                     scrollToSection(targetSection);
+                    // Tambahkan kelas animasi ke section target
+                    animateSection(targetSection);
                 }
-            } 
+            }
             // Jika tautan ke halaman lain
             else {
+                e.preventDefault();
                 const [targetPage, targetSection] = href.split('#');
-                // Jika halaman berbeda, tambahkan efek transisi
+                const currentPage = window.location.pathname.split('/').pop() || 'index.html';
                 if (targetPage && targetPage !== currentPage) {
-                    document.body.style.opacity = '0'; // Fade out
+                    document.body.style.opacity = '0';
                     setTimeout(() => {
-                        window.location.href = href; // Pindah ke halaman baru
-                    }, 300); // Sesuaikan dengan durasi transisi CSS
+                        window.location.href = href;
+                    }, 300);
                 } else if (targetSection) {
-                    // Jika halaman sama tapi ada section
                     const section = document.querySelector(`#${targetSection}`);
                     if (section) {
                         scrollToSection(section);
+                        animateSection(section);
                     }
                 }
             }
@@ -188,17 +200,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    function animateSection(section) {
+        // Hapus kelas animasi dari semua section
+        document.querySelectorAll('section').forEach(sec => {
+            sec.classList.remove('section-animate');
+        });
+        // Tambahkan kelas animasi ke section target
+        section.classList.add('section-animate');
+        // Hapus kelas setelah animasi selesai agar bisa diulang
+        setTimeout(() => {
+            section.classList.remove('section-animate');
+        }, 1000); // Sesuaikan dengan durasi animasi di CSS
+    }
+
     // Fade-in saat halaman dimuat
     window.addEventListener('load', () => {
         document.body.style.transition = 'opacity 0.3s ease';
         document.body.style.opacity = '1';
         
-        // Jika ada hash di URL, scroll ke section yang sesuai
         const hash = window.location.hash;
         if (hash) {
             const targetSection = document.querySelector(hash);
             if (targetSection) {
-                setTimeout(() => scrollToSection(targetSection), 100); // Delay kecil untuk memastikan halaman siap
+                setTimeout(() => {
+                    scrollToSection(targetSection);
+                    animateSection(targetSection);
+                }, 100);
             }
         }
     });

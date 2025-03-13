@@ -30,6 +30,21 @@ section {
     scroll-margin-top: 80px; /* Sesuaikan dengan tinggi header agar tidak tertutup */
 }
 
+.section-animate {
+    animation: slideIn 0.8s ease-out forwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 body.profile-page {
     background: linear-gradient(rgba(26, 37, 47, 0.1), rgba(26, 37, 47, 0.1)), url('https://via.placeholder.com/1600x900?text=Abstract+Wave');
 }
@@ -1311,6 +1326,10 @@ footer .inner-container {
     section {
         scroll-margin-top: 60px; /* Kurangi untuk layar kecil */
     }
+
+    .section-animate {
+        animation: slideIn 0.6s ease-out forwards; /* Durasi lebih cepat di layar kecil */
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -1329,6 +1348,10 @@ footer .inner-container {
     .prev-btn, .next-btn {
         padding: 10px;
         font-size: 18px;
+    }
+
+    .section-animate {
+        animation: slideIn 0.5s ease-out forwards; /* Lebih cepat lagi */
     }
 }
 
