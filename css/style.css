@@ -1,4 +1,3 @@
-/* Main Styles for the School Profile Website */
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +10,7 @@ html, body {
     overflow-x: hidden;
     margin: 0 !important;
     padding: 0 !important;
-    transform: translate3d(0, 0, 0); /* Paksa hardware acceleration */
+    transform: translate3d(0, 0, 0); 
 }
 
 body {
@@ -24,9 +23,9 @@ body {
     background-position: center;
     background-attachment: fixed;
     opacity: 1;
-    transition: none; /* Hapus transisi opacity default untuk menghindari konflik */
+    transition: none; 
     position: relative;
-    will-change: transform; /* Optimasi performa */
+    will-change: transform; 
 }
 
 .page-transition-overlay {
@@ -35,10 +34,10 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(26, 37, 47, 1); /* Opacity penuh untuk menutupi flicker */
-    z-index: 10000; /* Pastikan di atas semua elemen */
+    background: rgba(26, 37, 47, 1); 
+    z-index: 10000;
     opacity: 0;
-    transition: opacity 0.5s ease; /* Transisi hanya pada opacity */
+    transition: opacity 0.5s ease; 
     pointer-events: none;
 }
 
@@ -58,7 +57,7 @@ body {
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
     will-change: transform, opacity;
-    transform: translate3d(0, 0, 0); /* Paksa hardware acceleration */
+    transform: translate3d(0, 0, 0); 
 }
 
 .page-exit.slide-to-left {
@@ -69,13 +68,12 @@ body {
     animation-name: slideOutRight;
 }
 
-/* Animasi masuk halaman */
 .page-enter {
     animation-duration: 0.5s;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
     will-change: transform, opacity;
-    transform: translate3d(0, 0, 0); /* Paksa hardware acceleration */
+    transform: translate3d(0, 0, 0); 
 }
 
 .page-enter.slide-in-from-left {
@@ -131,8 +129,8 @@ body {
 }
 
 section, .profile-banner {
-    scroll-margin-top: 80px; /* Sesuaikan dengan tinggi header */
-    position: relative; /* Pastikan animasi bekerja dengan baik */
+    scroll-margin-top: 80px; 
+    position: relative; 
 }
 
 .slide-in-left {
@@ -169,7 +167,7 @@ section, .profile-banner {
 @keyframes slideInLeft {
     from {
         opacity: 0;
-        transform: translateX(-100px); /* Mulai dari kiri */
+        transform: translateX(-100px); 
     }
     to {
         opacity: 1;
@@ -180,7 +178,7 @@ section, .profile-banner {
 @keyframes slideInRight {
     from {
         opacity: 0;
-        transform: translateX(100px); /* Mulai dari kanan */
+        transform: translateX(100px); 
     }
     to {
         opacity: 1;
@@ -214,20 +212,18 @@ body.profile-page {
     background: linear-gradient(rgba(26, 37, 47, 0.1), rgba(26, 37, 47, 0.1)), url('https://via.placeholder.com/1600x900?text=Abstract+Wave');
 }
 
-/* Container untuk konten di dalam section */
 .container {
     width: 100%;
-    padding: 0; /* Hapus padding di container */
+    padding: 0; 
 }
 
-/* Inner container untuk elemen di dalam section agar tetap rapi */
 .inner-container {
     max-width: 1366px;
     margin: 0 auto;
-    padding: 0 20px; /* Padding diterapkan di sini */
+    padding: 0 20px; 
 }
 
-/* Header Styles */
+
 header {
     background: #1A252F;
     padding: 20px 0;
@@ -309,10 +305,9 @@ header {
     border-radius: 2px;
 }
 
-/* Welcome Section (Index Page) */
 .welcome {
     padding: 80px 0;
-    min-height: 100vh; /* Membuat section penuh tinggi layar */
+    min-height: 100vh; 
     text-align: center;
     border-bottom: 3px solid #00C4CC;
     width: 100%;
@@ -322,7 +317,7 @@ header {
     background-size: cover;
     background-position: center;
     display: flex;
-    align-items: center; /* Vertikal tengah */
+    align-items: center; 
 }
 
 .welcome::before {
@@ -371,7 +366,7 @@ header {
 }
 
 .welcome h1 span {
-    color: #FFD700; /* Warna kuning untuk username */
+    color: #FFD700; 
     transition: transform 0.3s ease, text-shadow 0.3s ease;
 }
 
@@ -380,18 +375,17 @@ header {
     text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
 }
 
-/* Slider Styles (Index Page) */
 .slider-container {
     position: relative;
     width: 100%;
-    max-width: 100%; /* Hilangkan batasan lebar maksimum */
+    max-width: 100%; 
     margin: 0 auto;
     overflow: hidden;
     z-index: 3;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     background: rgba(255, 255, 255, 0.1);
-    height: auto; /* Biarkan tinggi menyesuaikan */
+    height: auto; 
 }
 
 .slider {
@@ -414,16 +408,16 @@ header {
 
 .slide img {
     width: 100%;
-    height: auto; /* Biarkan tinggi menyesuaikan proporsi */
-    object-fit: cover; /* Pastikan gambar menutupi area */
-    object-position: center; /* Posisikan gambar di tengah */
+    height: auto; 
+    object-fit: cover; 
+    object-position: center; 
     border-radius: 15px;
     transition: transform 0.5s ease;
-    display: block; /* Hilangkan whitespace bawah gambar */
+    display: block; 
 }
 
 .slide:hover img {
-    transform: scale(1.05); /* Zoom subtle saat hover */
+    transform: scale(1.05); 
 }
 
 .slide-caption {
@@ -496,7 +490,7 @@ header {
 }
 
 .dot.active {
-    background: #FFD700; /* Warna kuning untuk dot aktif */
+    background: #FFD700; 
     transform: scale(1.4);
     box-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
 }
@@ -512,7 +506,6 @@ header {
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-/* Profile Banner Styles (Profile Page) */
 .profile-banner {
     background: linear-gradient(rgba(26, 37, 47, 0.8), rgba(26, 37, 47, 0.8)), url('https://via.placeholder.com/1600x400?text=Wave+Banner');
     color: #FFFFFF;
@@ -556,7 +549,6 @@ header {
     margin: 0 auto;
 }
 
-/* About School Section (Profile Page) */
 .about-school {
     padding: 80px 0;
     border-bottom: 3px solid #00C4CC;
@@ -608,7 +600,6 @@ header {
     color: #666666;
 }
 
-/* Vision & Mission Section (Profile Page) */
 .vision-mission {
     padding: 80px 0;
     border-bottom: 3px solid #00C4CC;
@@ -664,7 +655,6 @@ header {
     color: #666666;
 }
 
-/* School Stats Section (Profile Page) */
 .school-stats {
     padding: 80px 0;
     border-bottom: 3px solid #00C4CC;
@@ -691,7 +681,7 @@ header {
 
 .school-stats .stats-container .stat-box {
     background: linear-gradient(45deg, #00C4CC, #1A252F);
-    color: #FFFFFF; /* Warna teks default untuk stat-box */
+    color: #FFFFFF; 
     padding: 30px;
     text-align: center;
     border-radius: 10px;
@@ -707,14 +697,14 @@ header {
     font-size: 40px;
     font-weight: 800;
     margin-bottom: 15px;
-    color: #FFFFFF; /* Warna kuning cerah */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Shadow untuk kejelasan */
+    color: #FFFFFF; 
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); 
 }
 
 .school-stats .stats-container .stat-box .stat-title {
     font-size: 20px;
     text-transform: uppercase;
-    color: #FFFFFF; /* Pastikan stat-title tetap putih */
+    color: #FFFFFF; 
 }
 
 .stats-container {
@@ -751,7 +741,6 @@ header {
     text-transform: uppercase;
 }
 
-/* Achievement Section (Index Page) */
 .achievement {
     padding: 80px 0;
     border-bottom: 3px solid #00C4CC;
@@ -829,7 +818,6 @@ header {
     line-height: 1.5;
 }
 
-/* School Facilities Section (Profile Page) */
 .school-facilities {
     padding: 80px 0;
     border-bottom: 3px solid #00C4CC;
@@ -896,7 +884,6 @@ header {
     font-weight: 500;
 }
 
-/* Testimonials Section (Profile Page) */
 .testimonials {
     padding: 80px 0;
     border-bottom: 3px solid #00C4CC;
@@ -945,7 +932,6 @@ header {
     text-align: right;
 }
 
-/* Contact Section (Index Page) */
 .contact {
     padding: 80px 0;
     border-bottom: 3px solid #00C4CC;
@@ -1061,7 +1047,6 @@ button:hover {
     display: none;
 }
 
-/* Footer Styles */
 footer {
     padding: 40px 0;
     text-align: right;
@@ -1076,7 +1061,6 @@ footer .inner-container {
     text-align: right;
 }
 
-/* Responsive Styles */
 @media screen and (max-width: 1366px) {
     .slider-container {
         max-width: 100%;
@@ -1095,7 +1079,6 @@ footer .inner-container {
     }
 }
 
-/* Interactive text effect classes */
 .char-animate {
     display: inline-block;
     opacity: 0;
@@ -1108,7 +1091,6 @@ footer .inner-container {
     transform: translateY(0);
   }
   
-  /* Additional hover effects for the welcome section */
   .welcome .inner-container:hover h1 {
     transform: translateY(-5px);
   }
@@ -1117,7 +1099,6 @@ footer .inner-container {
     transition: transform 0.5s ease;
   }
 
-/* Why Choose Us Section */
 .why-choose-us {
     padding: 80px 0;
     border-bottom: 3px solid #00C4CC;
@@ -1179,7 +1160,6 @@ footer .inner-container {
     font-size: 16px;
 }
 
-/* Events Section */
 .events {
     padding: 80px 0;
     border-bottom: 3px solid #00C4CC;
@@ -1227,7 +1207,6 @@ footer .inner-container {
     margin: 5px 0;
 }
 
-/* Student Life Section */
 .student-life {
     padding: 80px 0;
     border-bottom: 3px solid #00C4CC;
@@ -1296,8 +1275,8 @@ footer .inner-container {
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s ease;
-    pointer-events: auto; /* Pastikan tombol bisa diklik */
-    position: relative; /* Pastikan tidak tertutup elemen lain */
+    pointer-events: auto; 
+    position: relative; 
     z-index: 10;
 }
 
@@ -1306,7 +1285,6 @@ footer .inner-container {
     transform: translateY(-3px);
 }
 
-/* Quick Stats Section */
 .quick-stats {
     padding: 80px 0;
     border-bottom: 3px solid #00C4CC;
@@ -1355,7 +1333,6 @@ footer .inner-container {
     color: #666666;
 }
 
-/* Event Links */
 .event-link {
     display: inline-block;
     margin-top: 10px;
@@ -1369,7 +1346,6 @@ footer .inner-container {
     color: #1A252F;
 }
 
-/* Life Links */
 .life-link {
     display: inline-block;
     margin-top: 10px;
@@ -1383,7 +1359,6 @@ footer .inner-container {
     color: #1A252F;
 }
 
-/* Quotes Section */
 .quotes {
     padding: 80px 0;
     border-bottom: 3px solid #00C4CC;
@@ -1432,7 +1407,6 @@ footer .inner-container {
     font-weight: 600;
 }
 
-/* Resources Section */
 .resources {
     padding: 80px 0;
     border-bottom: 3px solid #00C4CC;
@@ -1566,7 +1540,7 @@ footer .inner-container {
         max-width: 90%;
     }
     .slider-container {
-        padding-top: 56.25%; /* Tetap 16:9 */
+        padding-top: 56.25%; 
     }
     .prev-btn, .next-btn {
         width: 35px;
@@ -1590,7 +1564,7 @@ footer .inner-container {
     @keyframes slideInLeft {
         from {
             opacity: 0;
-            transform: translateX(-50px); /* Kurangi jarak untuk layar kecil */
+            transform: translateX(-50px); 
         }
         to {
             opacity: 1;
@@ -1600,7 +1574,7 @@ footer .inner-container {
     @keyframes slideInRight {
         from {
             opacity: 0;
-            transform: translateX(50px); /* Kurangi jarak untuk layar kecil */
+            transform: translateX(50px); 
         }
         to {
             opacity: 1;
@@ -1658,15 +1632,15 @@ footer .inner-container {
         font-size: 16px;
     }
     .slider-container {
-        height: 50vh; /* Atur tinggi slider untuk layar kecil */
+        height: 50vh; 
     }
     .slide {
-        height: 50vh; /* Pastikan slide mengikuti tinggi container */
+        height: 50vh; 
     }
     .slide img {
-        height: 100%; /* Gambar mengisi tinggi container */
-        width: 100%; /* Pastikan lebar penuh */
-        object-fit: cover; /* Tetap cover untuk mengisi */
+        height: 100%; 
+        width: 100%; 
+        object-fit: cover; 
     }
     .slide-caption {
         font-size: 12px;
@@ -1688,7 +1662,7 @@ footer .inner-container {
     @keyframes slideInLeft {
         from {
             opacity: 0;
-            transform: translateX(-30px); /* Jarak lebih kecil lagi */
+            transform: translateX(-30px); 
         }
         to {
             opacity: 1;
@@ -1698,7 +1672,7 @@ footer .inner-container {
     @keyframes slideInRight {
         from {
             opacity: 0;
-            transform: translateX(30px); /* Jarak lebih kecil lagi */
+            transform: translateX(30px); 
         }
         to {
             opacity: 1;
@@ -1742,7 +1716,7 @@ footer .inner-container {
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
     .slider-container {
-        height: 60vh; /* Tinggi sedikit lebih besar untuk tablet */
+        height: 60vh; 
     }
     .slide {
         height: 60vh;
@@ -1764,7 +1738,7 @@ footer .inner-container {
 
 @media screen and (min-width: 769px) and (max-width: 1366px) {
     .slider-container {
-        height: 70vh; /* Tinggi untuk desktop */
+        height: 70vh; 
     }
     .slide {
         height: 70vh;
@@ -1781,7 +1755,7 @@ footer .inner-container {
 
 @media screen and (min-width: 1367px) and (max-width: 2560px) {
     .slider-container {
-        height: 80vh; /* Tinggi untuk layar besar */
+        height: 80vh; 
     }
     .slide {
         height: 80vh;
@@ -1798,7 +1772,7 @@ footer .inner-container {
 
 @media screen and (min-width: 2561px) {
     .slider-container {
-        height: 90vh; /* Tinggi untuk 4K */
+        height: 90vh; 
     }
     .slide {
         height: 90vh;

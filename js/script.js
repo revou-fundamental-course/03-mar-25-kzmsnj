@@ -1,6 +1,4 @@
-// Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu toggle (untuk kedua halaman)
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav');
     
@@ -10,33 +8,26 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Username welcome handling (hanya di index.html)
     const usernameElement = document.getElementById('username');
     const storedName = sessionStorage.getItem('visitorName');
 
     if (usernameElement) {
-        // Jika sudah ada nama di sessionStorage, langsung tampilkan
         if (storedName) {
             console.log('Nama dari sessionStorage:', storedName);
             usernameElement.textContent = storedName;
         } 
-        // Jika belum ada, minta input dan tampilkan langsung
         else {
             const name = prompt('Please enter your name:', '');
             console.log('Nama yang dimasukkan:', name);
             if (name && name.trim() !== '') {
-                // Langsung ubah teks di elemen username
                 usernameElement.textContent = name;
-                // Simpan ke sessionStorage
                 sessionStorage.setItem('visitorName', name);
             } else {
-                // Jika input kosong atau dibatalkan, gunakan default
                 usernameElement.textContent = '(Ur Name)';
             }
         }
     }
     
-    // Update current time (hanya di index.html untuk contact form)
     function updateTime() {
         const now = new Date();
         const timeElement = document.getElementById('current-time');
@@ -50,7 +41,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setInterval(updateTime, 1000);
     }
     
-    // Form validation (hanya di index.html)
     const contactForm = document.getElementById('contactForm');
     
     if (contactForm) {
@@ -59,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             let isValid = true;
             
-            // Name validation
             const name = document.getElementById('name').value;
             const nameError = document.getElementById('nameError');
             if (!name.trim()) {
@@ -69,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 nameError.style.display = 'none';
             }
             
-            // Date validation
             const date = document.getElementById('date').value;
             const dateError = document.getElementById('dateError');
             if (!date) {
@@ -79,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 dateError.style.display = 'none';
             }
             
-            // Gender validation
             const genderMale = document.getElementById('male');
             const genderFemale = document.getElementById('female');
             const genderError = document.getElementById('genderError');
@@ -90,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 genderError.style.display = 'none';
             }
             
-            // Message validation
             const message = document.getElementById('message').value;
             const messageError = document.getElementById('messageError');
             if (!message.trim()) {
@@ -100,7 +86,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 messageError.style.display = 'none';
             }
             
-            // If form is valid, update the info panel
             if (isValid) {
                 const infoName = document.getElementById('info-name');
                 const infoDate = document.getElementById('info-date');
@@ -133,7 +118,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Quick Links (hanya di index.html)
     const quickLinks = document.querySelectorAll('.quick-link-btn');
     if (quickLinks.length > 0) {
         quickLinks.forEach(link => {
@@ -156,7 +140,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Smooth scrolling untuk navigasi dalam halaman yang sama (kedua halaman)
     const navLinks = document.querySelectorAll('.nav a');
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
@@ -185,29 +168,23 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 const [targetPage, targetSection] = href.split('#');
                 if (targetPage && targetPage !== currentPage) {
-                    // Buat overlay transisi
                     const transitionOverlay = document.createElement('div');
                     transitionOverlay.classList.add('page-transition-overlay');
                     document.body.appendChild(transitionOverlay);
 
-                    // Tentukan arah animasi
                     const isToProfile = targetPage === 'profile.html';
                     const directionClass = isToProfile ? 'slide-to-left' : 'slide-to-right';
 
-                    // Tambahkan kelas untuk memulai animasi keluar
                     document.body.classList.add('page-exit', directionClass);
 
-                    // Pastikan overlay muncul sebelum halaman baru dimuat
                     setTimeout(() => {
                         transitionOverlay.classList.add('active');
-                    }, 10); // Delay kecil untuk sinkronisasi
+                    }, 10); 
 
-                    // Tunggu animasi keluar selesai sebelum pindah halaman
                     setTimeout(() => {
                         window.location.href = href;
-                    }, 500); // Durasi animasi keluar
+                    }, 500); 
 
-                    // Jangan hapus overlay di sini, biarkan halaman baru yang menanganinya
                 } else if (targetSection) {
                     const section = document.querySelector(`#${targetSection}`);
                     if (section) {
@@ -221,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
 
-            lastScrollPosition = window.scrollY; // Perbarui posisi terakhir setelah klik
+            lastScrollPosition = window.scrollY; 
         });
     });
 
@@ -250,14 +227,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 800);
     }
 
-    // Fade-in dan animasi masuk saat halaman dimuat
     window.addEventListener('load', () => {
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
         const referrer = document.referrer;
         const fromProfile = referrer.includes('profile.html');
         const fromIndex = referrer.includes('index.html');
 
-        // Hapus overlay dari halaman sebelumnya jika ada
         const existingOverlay = document.querySelector('.page-transition-overlay');
         if (existingOverlay) {
             existingOverlay.classList.remove('active');
@@ -265,7 +240,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (document.body.contains(existingOverlay)) {
                     document.body.removeChild(existingOverlay);
                 }
-            }, 500); // Sinkronkan dengan durasi animasi masuk
+            }, 500); 
         }
 
         let enterClass = 'slide-in-from-right';
@@ -278,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.classList.add('page-enter', enterClass);
         setTimeout(() => {
             document.body.classList.remove('page-enter', enterClass);
-        }, 500); // Durasi animasi masuk
+        }, 500); 
 
         const hash = window.location.hash;
         if (hash) {
@@ -292,11 +267,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Tambahkan event listener untuk resize
     window.addEventListener('resize', () => {
         if (slider) {
-            setSliderPosition(false); // Perbarui posisi tanpa animasi saat resize
-            // Pastikan slide memiliki tinggi yang sesuai
+            setSliderPosition(false); 
             const slides = document.querySelectorAll('.slide');
             slides.forEach(slide => {
                 slide.style.height = `${slider.clientHeight}px`;
