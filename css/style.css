@@ -22,6 +22,12 @@ body {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    opacity: 1; /* Default state */
+    transition: opacity 0.3s ease; /* Transisi untuk fade in/out */
+}
+
+section {
+    scroll-margin-top: 80px; /* Sesuaikan dengan tinggi header agar tidak tertutup */
 }
 
 body.profile-page {
@@ -1300,6 +1306,10 @@ footer .inner-container {
     .welcome p {
         animation-duration: 1s;
         animation-delay: 0.3s;
+    }
+
+    section {
+        scroll-margin-top: 60px; /* Kurangi untuk layar kecil */
     }
 }
 

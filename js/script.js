@@ -150,18 +150,57 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav a');
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href');
-            if (targetId.startsWith('#')) { // Hanya untuk link dalam halaman yang sama
-                e.preventDefault();
-                const targetSection = document.querySelector(targetId);
+            e.preventDefault(); // Mencegah perilaku default untuk semua tautan
+            const href = this.getAttribute('href');
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+            // Jika tautan dalam halaman yang sama
+            if (href.startsWith('#')) {
+                const targetSection = document.querySelector(href);
                 if (targetSection) {
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    scrollToSection(targetSection);
+                }
+            } 
+            // Jika tautan ke halaman lain
+            else {
+                const [targetPage, targetSection] = href.split('#');
+                // Jika halaman berbeda, tambahkan efek transisi
+                if (targetPage && targetPage !== currentPage) {
+                    document.body.style.opacity = '0'; // Fade out
+                    setTimeout(() => {
+                        window.location.href = href; // Pindah ke halaman baru
+                    }, 300); // Sesuaikan dengan durasi transisi CSS
+                } else if (targetSection) {
+                    // Jika halaman sama tapi ada section
+                    const section = document.querySelector(`#${targetSection}`);
+                    if (section) {
+                        scrollToSection(section);
+                    }
                 }
             }
         });
+    });
+
+    function scrollToSection(section) {
+        section.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+
+    // Fade-in saat halaman dimuat
+    window.addEventListener('load', () => {
+        document.body.style.transition = 'opacity 0.3s ease';
+        document.body.style.opacity = '1';
+        
+        // Jika ada hash di URL, scroll ke section yang sesuai
+        const hash = window.location.hash;
+        if (hash) {
+            const targetSection = document.querySelector(hash);
+            if (targetSection) {
+                setTimeout(() => scrollToSection(targetSection), 100); // Delay kecil untuk memastikan halaman siap
+            }
+        }
     });
 
     // Slider Functionality (hanya di index.html)
