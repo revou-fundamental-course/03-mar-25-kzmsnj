@@ -138,16 +138,17 @@ document.addEventListener('DOMContentLoaded', function() {
     if (quickLinks.length > 0) {
         quickLinks.forEach(link => {
             link.addEventListener('click', function(e) {
-                console.log('Tautan diklik:', href, 'Halaman saat ini:', currentPage);
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
-                console.log('Quick link clicked:', targetId);
                 const targetSection = document.querySelector(targetId);
+
                 if (targetSection) {
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    const currentScroll = window.scrollY;
+                    const targetPosition = targetSection.getBoundingClientRect().top + window.scrollY;
+                    const direction = targetPosition < currentScroll ? 'up' : 'down';
+
+                    scrollToSection(targetSection);
+                    animateSection(targetSection, direction);
                 } else {
                     console.log('Section not found for ID:', targetId);
                 }
@@ -156,13 +157,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Smooth scrolling untuk navigasi dalam halaman yang sama (kedua halaman)
+    const navLinks = document.querySelectorAll('.nav a');
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const href = this.getAttribute('href');
             const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 
-            // Jika tautan dalam halaman yang sama (slide atas-bawah)
             if (href.startsWith('#')) {
                 const targetSection = document.querySelector(href);
                 if (targetSection) {
@@ -181,35 +182,32 @@ document.addEventListener('DOMContentLoaded', function() {
                     const profileBanner = document.querySelector('#profile-banner');
                     if (profileBanner) animateSection(profileBanner, 'up');
                 }
-            } 
-            // Jika tautan ke halaman lain (slide kanan-kiri)
-            else {
+            } else {
                 const [targetPage, targetSection] = href.split('#');
                 if (targetPage && targetPage !== currentPage) {
-                    // Buat elemen transisi sementara
+                    // Buat overlay transisi
                     const transitionOverlay = document.createElement('div');
                     transitionOverlay.classList.add('page-transition-overlay');
                     document.body.appendChild(transitionOverlay);
 
-                    // Tentukan arah animasi horizontal
+                    // Tentukan arah animasi
                     const isToProfile = targetPage === 'profile.html';
                     const directionClass = isToProfile ? 'slide-to-left' : 'slide-to-right';
 
-                    // Terapkan animasi keluar
+                    // Tambahkan kelas untuk memulai animasi keluar
                     document.body.classList.add('page-exit', directionClass);
 
-                    // Tunggu animasi selesai, lalu pindah halaman
+                    // Pastikan overlay muncul sebelum halaman baru dimuat
+                    setTimeout(() => {
+                        transitionOverlay.classList.add('active');
+                    }, 10); // Delay kecil untuk sinkronisasi
+
+                    // Tunggu animasi keluar selesai sebelum pindah halaman
                     setTimeout(() => {
                         window.location.href = href;
-                    }, 600); // Sesuaikan dengan durasi animasi di CSS
+                    }, 500); // Durasi animasi keluar
 
-                    // Bersihkan overlay setelah transisi
-                    setTimeout(() => {
-                        if (document.body.contains(transitionOverlay)) {
-                            document.body.removeChild(transitionOverlay);
-                        }
-                        document.body.classList.remove('page-exit', directionClass);
-                    }, 1200);
+                    // Jangan hapus overlay di sini, biarkan halaman baru yang menanganinya
                 } else if (targetSection) {
                     const section = document.querySelector(`#${targetSection}`);
                     if (section) {
@@ -234,7 +232,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Fungsi untuk smooth scrolling ke atas halaman
     function scrollToTop() {
         window.scrollTo({
             top: 0,
@@ -250,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
         section.classList.add(animationClass);
         setTimeout(() => {
             section.classList.remove(animationClass);
-        }, 800); // Sesuaikan dengan durasi animasi di CSS
+        }, 800);
     }
 
     // Fade-in dan animasi masuk saat halaman dimuat
@@ -260,17 +257,28 @@ document.addEventListener('DOMContentLoaded', function() {
         const fromProfile = referrer.includes('profile.html');
         const fromIndex = referrer.includes('index.html');
 
-        let enterClass = 'slide-in-from-right'; // Default masuk dari kanan
+        // Hapus overlay dari halaman sebelumnya jika ada
+        const existingOverlay = document.querySelector('.page-transition-overlay');
+        if (existingOverlay) {
+            existingOverlay.classList.remove('active');
+            setTimeout(() => {
+                if (document.body.contains(existingOverlay)) {
+                    document.body.removeChild(existingOverlay);
+                }
+            }, 500); // Sinkronkan dengan durasi animasi masuk
+        }
+
+        let enterClass = 'slide-in-from-right';
         if (currentPage === 'index.html' && fromProfile) {
-            enterClass = 'slide-in-from-left'; // Dari profile ke index
+            enterClass = 'slide-in-from-left';
         } else if (currentPage === 'profile.html' && fromIndex) {
-            enterClass = 'slide-in-from-right'; // Dari index ke profile
+            enterClass = 'slide-in-from-right';
         }
 
         document.body.classList.add('page-enter', enterClass);
         setTimeout(() => {
             document.body.classList.remove('page-enter', enterClass);
-        }, 600);
+        }, 500); // Durasi animasi masuk
 
         const hash = window.location.hash;
         if (hash) {
@@ -284,110 +292,120 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Tambahkan event listener untuk resize
+    window.addEventListener('resize', () => {
+        if (slider) {
+            setSliderPosition(false); // Perbarui posisi tanpa animasi saat resize
+            // Pastikan slide memiliki tinggi yang sesuai
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => {
+                slide.style.height = `${slider.clientHeight}px`;
+            });
+        }
+    })
+
     // Slider Functionality (hanya di index.html)
     const slider = document.querySelector('.slider');
     if (slider) {
-        const slides = document.querySelectorAll('.slide');
-        const prevBtn = document.querySelector('.prev-btn');
-        const nextBtn = document.querySelector('.next-btn');
-        const dotsContainer = document.querySelector('.slider-dots');
-        let currentSlide = 1;
-        let isDragging = false;
-        let startPos = 0;
-        let currentTranslate = 0;
-        let prevTranslate = 0;
-        let animationID = 0;
-        let autoSlideInterval;
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const dotsContainer = document.querySelector('.slider-dots');
+    let currentSlide = 1;
+    let isDragging = false;
+    let startPos = 0;
+    let currentTranslate = 0;
+    let prevTranslate = 0;
+    let animationID = 0;
+    let autoSlideInterval;
 
-        const firstSlideClone = slides[0].cloneNode(true);
-        const lastSlideClone = slides[slides.length - 1].cloneNode(true);
-        slider.appendChild(firstSlideClone);
-        slider.insertBefore(lastSlideClone, slides[0]);
+    const firstSlideClone = slides[0].cloneNode(true);
+    const lastSlideClone = slides[slides.length - 1].cloneNode(true);
+    slider.appendChild(firstSlideClone);
+    slider.insertBefore(lastSlideClone, slides[0]);
 
-        const allSlides = document.querySelectorAll('.slide');
+    const allSlides = document.querySelectorAll('.slide');
+    slider.style.transform = `translateX(${-currentSlide * 100}%)`;
+
+    function createDots() {
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < slides.length; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                stopAutoSlide();
+                currentSlide = i + 1;
+                setSliderPosition(true);
+                updateDots();
+                startAutoSlide();
+            });
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    function setSliderPosition(withTransition = true) {
+        slider.style.transition = withTransition 
+            ? 'transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55)' 
+            : 'none';
         slider.style.transform = `translateX(${-currentSlide * 100}%)`;
+        prevTranslate = -currentSlide * slider.clientWidth;
+    }
 
-        function createDots() {
-            dotsContainer.innerHTML = '';
-            for (let i = 0; i < slides.length; i++) {
-                const dot = document.createElement('div');
-                dot.classList.add('dot');
-                if (i === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => {
-                    stopAutoSlide();
-                    currentSlide = i + 1;
-                    setSliderPosition(true);
-                    updateDots();
-                    startAutoSlide();
-                });
-                dotsContainer.appendChild(dot);
-            }
+    function updateDots() {
+        const actualIndex = (currentSlide - 1 + slides.length) % slides.length;
+        const dots = document.querySelectorAll('.dot');
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === actualIndex);
+        });
+    }
+
+    function nextSlide() {
+        currentSlide++;
+        setSliderPosition();
+        if (currentSlide === allSlides.length - 1) {
+            setTimeout(() => {
+                currentSlide = 1;
+                setSliderPosition(false);
+            }, 600);
         }
+        updateDots();
+    }
 
-        function setSliderPosition(withTransition = true) {
-            if (withTransition) {
-                slider.style.transition = 'transform 0.5s ease-in-out';
-            } else {
-                slider.style.transition = 'none';
-            }
-            slider.style.transform = `translateX(${-currentSlide * 100}%)`;
-            prevTranslate = -currentSlide * slider.clientWidth;
+    function prevSlide() {
+        currentSlide--;
+        setSliderPosition();
+        if (currentSlide === 0) {
+            setTimeout(() => {
+                currentSlide = slides.length;
+                setSliderPosition(false);
+            }, 600);
         }
+        updateDots();
+    }
 
-        function updateDots() {
-            const actualIndex = (currentSlide - 1 + slides.length) % slides.length;
-            const dots = document.querySelectorAll('.dot');
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === actualIndex);
-            });
-        }
+    function startAutoSlide() {
+        clearInterval(autoSlideInterval);
+        autoSlideInterval = setInterval(nextSlide, 5000);
+    }
 
-        function nextSlide() {
-            currentSlide++;
-            setSliderPosition();
-            if (currentSlide === allSlides.length - 1) {
-                setTimeout(() => {
-                    currentSlide = 1;
-                    setSliderPosition(false);
-                }, 500);
-            }
-            updateDots();
-        }
+    function stopAutoSlide() {
+        clearInterval(autoSlideInterval);
+    }
 
-        function prevSlide() {
-            currentSlide--;
-            setSliderPosition();
-            if (currentSlide === 0) {
-                setTimeout(() => {
-                    currentSlide = slides.length;
-                    setSliderPosition(false);
-                }, 500);
-            }
-            updateDots();
-        }
+    if (nextBtn && prevBtn) {
+        nextBtn.addEventListener('click', () => {
+            stopAutoSlide();
+            nextSlide();
+            startAutoSlide();
+        });
 
-        function startAutoSlide() {
-            clearInterval(autoSlideInterval);
-            autoSlideInterval = setInterval(nextSlide, 5000);
-        }
-
-        function stopAutoSlide() {
-            clearInterval(autoSlideInterval);
-        }
-
-        if (nextBtn && prevBtn) {
-            nextBtn.addEventListener('click', () => {
-                stopAutoSlide();
-                nextSlide();
-                startAutoSlide();
-            });
-
-            prevBtn.addEventListener('click', () => {
-                stopAutoSlide();
-                prevSlide();
-                startAutoSlide();
-            });
-        }
+        prevBtn.addEventListener('click', () => {
+            stopAutoSlide();
+            prevSlide();
+            startAutoSlide();
+        });
+    }
 
         function startDragging(e) {
             isDragging = true;
@@ -587,6 +605,15 @@ document.addEventListener('DOMContentLoaded', function() {
             if (welcomeParagraph) {
                 welcomeParagraph.style.transform = `translateX(${posX / 80}px) translateY(${posY / 80}px)`;
             }
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (slider) {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => {
+                slide.style.height = `${slider.clientHeight}px`;
+            });
         }
     });
 
