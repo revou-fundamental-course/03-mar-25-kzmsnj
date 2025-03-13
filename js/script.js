@@ -138,6 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (quickLinks.length > 0) {
         quickLinks.forEach(link => {
             link.addEventListener('click', function(e) {
+                console.log('Tautan diklik:', href, 'Halaman saat ini:', currentPage);
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
                 console.log('Quick link clicked:', targetId);
@@ -156,40 +157,74 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Smooth scrolling untuk navigasi dalam halaman yang sama (kedua halaman)
     const navLinks = document.querySelectorAll('.nav a');
+    let lastScrollPosition = window.scrollY; // Simpan posisi scroll terakhir
+
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            e.preventDefault(); // Mencegah perilaku default untuk semua tautan
+            e.preventDefault();
             const href = this.getAttribute('href');
             const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 
             // Jika tautan dalam halaman yang sama
             if (href.startsWith('#')) {
-                e.preventDefault();
                 const targetSection = document.querySelector(href);
                 if (targetSection) {
+                    const currentScroll = window.scrollY;
+                    const targetPosition = targetSection.getBoundingClientRect().top + window.scrollY;
+                    const direction = targetPosition < currentScroll ? 'up' : 'down';
+
                     scrollToSection(targetSection);
-                    // Tambahkan kelas animasi ke section target
-                    animateSection(targetSection);
+                    animateSection(targetSection, direction);
+                } else if (href === '#welcome' && currentPage === 'index.html') {
+                    scrollToTop();
+                    const welcomeSection = document.querySelector('#welcome');
+                    if (welcomeSection) animateSection(welcomeSection, 'up');
+                } else if (href === '#profile-banner' && currentPage === 'profile.html') {
+                    scrollToTop();
+                    const profileBanner = document.querySelector('#profile-banner');
+                    if (profileBanner) animateSection(profileBanner, 'up');
                 }
             }
             // Jika tautan ke halaman lain
             else {
-                e.preventDefault();
                 const [targetPage, targetSection] = href.split('#');
-                const currentPage = window.location.pathname.split('/').pop() || 'index.html';
                 if (targetPage && targetPage !== currentPage) {
-                    document.body.style.opacity = '0';
+                    // Buat elemen transisi sementara
+                    const transitionOverlay = document.createElement('div');
+                    transitionOverlay.classList.add('page-transition-overlay');
+                    document.body.appendChild(transitionOverlay);
+
+                    // Tentukan arah animasi berdasarkan tautan
+                    const isToProfile = targetPage === 'profile.html';
+                    const directionClass = isToProfile ? 'slide-to-right' : 'slide-to-left';
+
+                    // Terapkan animasi keluar
+                    document.body.classList.add('page-exit', directionClass);
+
+                    // Tunggu animasi selesai, lalu pindah halaman
                     setTimeout(() => {
                         window.location.href = href;
-                    }, 300);
+                    }, 600); // Sesuaikan dengan durasi animasi di CSS
+
+                    // Bersihkan overlay setelah transisi
+                    setTimeout(() => {
+                        document.body.removeChild(transitionOverlay);
+                        document.body.classList.remove('page-exit', directionClass);
+                    }, 1200); // Durasi total untuk memastikan pembersihan
                 } else if (targetSection) {
                     const section = document.querySelector(`#${targetSection}`);
                     if (section) {
+                        const currentScroll = window.scrollY;
+                        const targetPosition = section.getBoundingClientRect().top + window.scrollY;
+                        const direction = targetPosition < currentScroll ? 'up' : 'down';
+
                         scrollToSection(section);
-                        animateSection(section);
+                        animateSection(section, direction);
                     }
                 }
             }
+
+            lastScrollPosition = window.scrollY; // Perbarui posisi terakhir setelah klik
         });
     });
 
@@ -200,17 +235,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function animateSection(section) {
-        // Hapus kelas animasi dari semua section
-        document.querySelectorAll('section').forEach(sec => {
-            sec.classList.remove('section-animate');
+    // Fungsi untuk smooth scrolling ke atas halaman
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
         });
-        // Tambahkan kelas animasi ke section target
-        section.classList.add('section-animate');
-        // Hapus kelas setelah animasi selesai agar bisa diulang
+    }+
+
+    function animateSection(section, direction) {
+        // Hapus kelas animasi sebelumnya
+        document.querySelectorAll('section, .profile-banner').forEach(sec => {
+            sec.classList.remove('slide-in-left', 'slide-in-right');
+        });
+
+        // Tentukan animasi berdasarkan arah
+        const animationClass = direction === 'up' ? 'slide-in-right' : 'slide-in-left';
+        section.classList.add(animationClass);
+
+        // Hapus kelas setelah animasi selesai
         setTimeout(() => {
-            section.classList.remove('section-animate');
-        }, 1000); // Sesuaikan dengan durasi animasi di CSS
+            section.classList.remove(animationClass);
+        }, 800); // Sesuaikan dengan durasi animasi di CSS
     }
 
     // Fade-in saat halaman dimuat
@@ -224,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (targetSection) {
                 setTimeout(() => {
                     scrollToSection(targetSection);
-                    animateSection(targetSection);
+                    animateSection(targetSection, 'down'); // Default ke bawah saat load
                 }, 100);
             }
         }

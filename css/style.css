@@ -26,11 +26,20 @@ body {
     transition: opacity 0.3s ease; /* Transisi untuk fade in/out */
 }
 
-section {
-    scroll-margin-top: 80px; /* Sesuaikan dengan tinggi header agar tidak tertutup */
+section, .profile-banner {
+    scroll-margin-top: 80px; /* Sesuaikan dengan tinggi header */
+    position: relative; /* Pastikan animasi bekerja dengan baik */
 }
 
-.section-animate {
+.slide-in-left {
+    animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.slide-in-right {
+    animation: slideInRight 0.8s ease-out forwards;
+}
+
+.section-animate, .profile-banner.section-animate {
     animation: slideIn 0.8s ease-out forwards;
 }
 
@@ -42,6 +51,28 @@ section {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100px); /* Mulai dari kiri */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px); /* Mulai dari kanan */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
     }
 }
 
@@ -1323,12 +1354,34 @@ footer .inner-container {
         animation-delay: 0.3s;
     }
 
-    section {
-        scroll-margin-top: 60px; /* Kurangi untuk layar kecil */
+    section, .profile-banner {
+        scroll-margin-top: 60px;
     }
-
-    .section-animate {
-        animation: slideIn 0.6s ease-out forwards; /* Durasi lebih cepat di layar kecil */
+    .slide-in-left {
+        animation: slideInLeft 0.6s ease-out forwards;
+    }
+    .slide-in-right {
+        animation: slideInRight 0.6s ease-out forwards;
+    }
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-50px); /* Kurangi jarak untuk layar kecil */
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(50px); /* Kurangi jarak untuk layar kecil */
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
     }
 }
 
@@ -1350,8 +1403,31 @@ footer .inner-container {
         font-size: 18px;
     }
 
-    .section-animate {
-        animation: slideIn 0.5s ease-out forwards; /* Lebih cepat lagi */
+    .slide-in-left {
+        animation: slideInLeft 0.5s ease-out forwards;
+    }
+    .slide-in-right {
+        animation: slideInRight 0.5s ease-out forwards;
+    }
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-30px); /* Jarak lebih kecil lagi */
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(30px); /* Jarak lebih kecil lagi */
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
     }
 }
 
